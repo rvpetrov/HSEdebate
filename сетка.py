@@ -5,21 +5,21 @@ from time import sleep
 
 
 def main():
-    worksheet: Worksheet = __connect_to_sheet__(url=regs_url)
-    data: list = []
+    worksheet: Worksheet = __connect_to_sheet__(url=regs_url, __is_for_stat=None)
+    data = []
     for i in range(len(worksheet.col_values(2)[1:])):
         data.append(worksheet.row_values(i+2)[1:])
-    regs: list = worksheet.col_values(2)[1:]
-    wishes: list = worksheet.col_values(3)[1:]
+    regs = worksheet.col_values(2)[1:]
+    wishes = worksheet.col_values(3)[1:]
     if len(set(wishes)) != len(wishes) - wishes.count(""):
-        conflicts: list = []
+        conflicts = []
         for el in wishes:
             if el != "" and wishes.count(el) != 1 and el not in conflicts:
                 conflicts.append(el)
     else:
-        conflicts: None = None
-    teams: list = []
-    __elements: list = []
+        conflicts = None
+    teams = []
+    __elements = []
     if len(wishes) != 0:
         for i in range(len(wishes)):
             if wishes[i] != "":
@@ -41,8 +41,8 @@ def main():
             except IndexError:
                 pass
     shuffle(teams)
-    rooms: list = []
-    extras: list | None = None
+    rooms = []
+    extras = None
     while len(teams) != 0:
         try:
             room = sample(teams, 4)
@@ -55,7 +55,7 @@ def main():
         rooms.append(room)
         for team in room:
             del teams[teams.index(team)]
-    worksheet: Worksheet = __connect_to_sheet__(url=rooms_url)
+    worksheet: Worksheet = __connect_to_sheet__(url=rooms_url, __is_for_stat=None)
     for room in rooms:
         if len(room) == 4:
             data = [
@@ -72,27 +72,27 @@ def main():
                 ["ㅤ"], ["ㅤ"]
             ]
         for row in data:
-            next_row: int = len(worksheet.col_values(col=1)) + 1
+            next_row = len(worksheet.col_values(col=1)) + 1
             for i in range(len(row)):
                 worksheet.update_cell(row=next_row, col=i+1, value=row[i])
             sleep(0.5)
     if extras is not None:
-        next_row: int = len(worksheet.col_values(col=1)) + 1
+        next_row = len(worksheet.col_values(col=1)) + 1
         worksheet.update_cell(row=next_row, col=1, value="Не поместились")
         sleep(0.5)
         extras_data = ""
         for extra in extras:
             extras_data += f"{extra[0]}, {extra[1]}, "
-        next_row: int = len(worksheet.col_values(col=1)) + 1
+        next_row = len(worksheet.col_values(col=1)) + 1
         worksheet.update_cell(row=next_row, col=1, value=extras_data)
     if conflicts is not None:
-        next_row: int = len(worksheet.col_values(col=1)) + 1
+        next_row = len(worksheet.col_values(col=1)) + 1
         worksheet.update_cell(row=next_row, col=1, value="Конфликты")
         sleep(0.5)
         conflicts_data = ""
         for conflict in conflicts:
             conflicts_data += f"{conflict}, "
-        next_row: int = len(worksheet.col_values(col=1)) + 1
+        next_row = len(worksheet.col_values(col=1)) + 1
         worksheet.update_cell(row=next_row, col=1, value=conflicts_data)
     print("done!")
 
