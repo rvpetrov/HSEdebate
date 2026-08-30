@@ -75,7 +75,7 @@ def main():
             next_row: int = len(worksheet.col_values(col=1)) + 1
             for i in range(len(row)):
                 worksheet.update_cell(row=next_row, col=i+1, value=row[i])
-                sleep(0.5)
+            sleep(0.5)
     if extras is not None:
         next_row: int = len(worksheet.col_values(col=1)) + 1
         worksheet.update_cell(row=next_row, col=1, value="Не поместились")
