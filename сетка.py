@@ -73,26 +73,31 @@ def main():
             ]
         for row in data:
             next_row = len(worksheet.col_values(col=1)) + 1
+            sleep(1)
             for i in range(len(row)):
                 worksheet.update_cell(row=next_row, col=i+1, value=row[i])
-            sleep(0.5)
+            sleep(1)
     if extras is not None:
         next_row = len(worksheet.col_values(col=1)) + 1
+        sleep(1)
         worksheet.update_cell(row=next_row, col=1, value="Не поместились")
-        sleep(0.5)
+        sleep(1)
         extras_data = ""
         for extra in extras:
             extras_data += f"{extra[0]}, {extra[1]}, "
         next_row = len(worksheet.col_values(col=1)) + 1
+        sleep(1)
         worksheet.update_cell(row=next_row, col=1, value=extras_data)
     if conflicts is not None:
         next_row = len(worksheet.col_values(col=1)) + 1
+        sleep(1)
         worksheet.update_cell(row=next_row, col=1, value="Конфликты")
-        sleep(0.5)
+        sleep(1)
         conflicts_data = ""
         for conflict in conflicts:
             conflicts_data += f"{conflict}, "
         next_row = len(worksheet.col_values(col=1)) + 1
+        sleep(1)
         worksheet.update_cell(row=next_row, col=1, value=conflicts_data)
     print("done!")
 
